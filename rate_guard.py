@@ -24,7 +24,8 @@ class RateGuard(object):
             with self.lock:
                 time_remain = self._time_remain()
                 if time_remain <= 0:
-                    self.num_calls = 0
+                    for key in self.arguments_called:
+                        self.arguments_called[key] = 0
                     self.last_reset = self.clock()
 
                 self.arguments_called[(kargs["account_id"], kargs["user_name"])] += 1
